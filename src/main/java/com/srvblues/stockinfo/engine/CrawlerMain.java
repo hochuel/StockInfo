@@ -17,8 +17,6 @@ public class CrawlerMain {
 
         String URL = "";
         try {
-
-
             URL = "http://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?pGB=1&gicode=A"+code+"&cID=&MenuYn=Y&ReportGB=&NewMenuID=11&stkGb=701";
             // 2. Connection 생성
             Connection conn = Jsoup.connect(URL);
