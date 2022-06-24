@@ -27,13 +27,6 @@ public class StockThread implements Runnable{
         try {
             while (!blockingQueue.isEmpty()) {
                 crawlerMain.getStockInfo(this.threadName, blockingQueue, resultListData);
-
-
-                //if(blockingQueue.isEmpty()) {
-                 //   this.execute = false;
-                //    log.info("종료...............................");
-               // }
-
                 Thread.sleep(2000);
             }
         } catch (InterruptedException e) {

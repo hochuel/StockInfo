@@ -89,8 +89,8 @@ public class CrawlerMain {
             Elements 현재주가 = html.select("div dl dd:eq(4)");
             String str현재주가 = 현재주가.html().substring(4, 현재주가.html().indexOf("전일대비") - 1).replaceAll(",", "");
 
-
-            double 가격대비 =  Math.round((((double)Math.round(적정주가) - (double)Integer.parseInt(str현재주가)) / Math.round(적정주가)) * 100) ;
+//(Math.round(roe * 100)/100.0);
+            double 가격대비 =  Math.round(((double)Math.round(적정주가) / (double)Integer.parseInt(str현재주가)) * 100)/100.0;
 
 
 
@@ -157,7 +157,11 @@ public class CrawlerMain {
     public static void main(String[] args) throws Exception {
         CrawlerMain crawlerMain = new CrawlerMain();
         //crawlerMain.getFnguidData("266870");
-        List list = crawlerMain.ExcelRead();
+        //List list = crawlerMain.ExcelRead();
+
+        HMap result = crawlerMain.getFnguidData("007690", "국도화학", "KOSPI");
+
+        log.info("result ::" + result);
         
         
     }
