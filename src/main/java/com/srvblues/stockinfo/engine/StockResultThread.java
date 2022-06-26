@@ -26,6 +26,13 @@ public class StockResultThread extends Thread{
         int num = -1;
         while(isExecute){
 
+
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             if(num == this.resultList.size()) {
                 log.info("result 종료.....::" + resultList);
 
@@ -45,12 +52,6 @@ public class StockResultThread extends Thread{
             }
 
             num = this.resultList.size();
-
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
 
 

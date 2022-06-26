@@ -51,6 +51,33 @@ public class CrawlerMain {
             str지배주주지분 = str지배주주지분.indexOf("<span") > -1?"0":str지배주주지분;
             str지배주주지분 = str지배주주지분.indexOf("&nbsp;") > -1?"0":str지배주주지분;
 
+            Elements 매출정보 = 재무정보.select("tbody tr:eq(0) td:gt(0):lt(4)");
+            Elements 영업이익 = 재무정보.select("tbody tr:eq(1) td:gt(0):lt(4)");
+            float 영업이익률 = 0;
+            for(int i = 0; i < 매출정보.size(); i++){
+                Element 매출 = 매출정보.get(i);
+                Element 영업 = 영업이익.get(i);
+
+                String v매출 = 매출.text().replaceAll(",", "");
+                String v영업 = 영업.text().replaceAll(",", "");
+
+                v매출 = v매출 == null || v매출.equals("")?"0":v매출;
+                v영업 = v영업 == null || v영업.equals("")?"0":v영업;
+
+                //log.info("v매출 :" + v매출 +" v영업:: " + v영업);
+
+                float v영업이익률 = (float) (((double)(Integer.parseInt(v영업)) / (double)(Integer.parseInt(v매출))) * 100);
+                //log.info("v영업이익률 ::" + v영업이익률);
+
+
+                영업이익률 += v영업이익률;
+
+            }
+
+            영업이익률 = (float) (Math.round((영업이익률 / 매출정보.size()) * 100)/100.0);
+            //log.info("영업이익률2 ::" + 영업이익률);
+
+
             Elements ROE = 재무정보.select("tbody tr:eq(17) td:gt(0):lt(4)");
             int sum = 0;
             float a = 0;
@@ -108,6 +135,7 @@ public class CrawlerMain {
             result.put("기업가치_20감소", String.valueOf(Math.round(적정주가_20)));
             result.put("현재주가", String.valueOf(str현재주가));
             result.put("가격대비",String.valueOf(가격대비));
+            result.put("영업이익률",String.valueOf(영업이익률));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,7 +160,7 @@ public class CrawlerMain {
 
 
     public List<HMap> ExcelRead() throws Exception {
-        Excel excel = Excel.makeSec(new File("C:\\stockInfo\\data_2245_20220623.xlsx"), "data_2245_20220623.xlsx");
+        Excel excel = Excel.makeSec(new File("C:\\stockInfo\\stockInfo.xlsx"), "stockInfo.xlsx");
         List<List<HMap>> dataList = excel.toHMapList();
         List<HMap> listSheet = dataList.get(0);
         log.info("listSheet size:" + listSheet.size());
