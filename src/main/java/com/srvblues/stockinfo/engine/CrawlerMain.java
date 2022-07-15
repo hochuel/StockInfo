@@ -121,6 +121,11 @@ public class CrawlerMain {
 
 
 
+            double bps = Float.parseFloat(str주식수) > 0 ? (Float.parseFloat(str지배주주지분) * 기준가격)  / Float.parseFloat(str주식수):0;
+            bps =  Math.floor(bps);
+
+            float pbr = bps > 0 ? (float) (Float.parseFloat(str현재주가) / bps) : 0;
+            pbr = (float) (Math.round(pbr * 100)/100.0);
 
             result.put("code", code);
             result.put("name", name);
@@ -128,6 +133,8 @@ public class CrawlerMain {
             result.put("시가총액",String.valueOf(str시가총액));
             result.put("주식수",String.valueOf(str주식수));
             result.put("지배주주지분",String.valueOf(str지배주주지분));
+            result.put("BPS", String.valueOf(bps));
+            result.put("PBR", String.valueOf(pbr));
             result.put("ROE",String.valueOf(roe));
             result.put("기업가치", String.valueOf(기업가치_현재));
             result.put("적정주가", String.valueOf(Math.round(적정주가)));
